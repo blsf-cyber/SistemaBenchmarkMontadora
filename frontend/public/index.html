@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Benchmarking</title>
+
+    <!-- Fonte Roboto Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Roboto Mono", monospace;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background-color: #f4f4f4;
+        }
+
+        .texto {
+            width: 80%;
+            font-size: 1.4rem;
+            line-height: 1.7rem;
+            text-align: center;
+        }
+
+        /* Botão superior direito */
+        .btn-lista {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+
+        /* Botão inferior esquerdo */
+        .btn-cadastro {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            padding: 12px 20px;
+            background-color: #28a745;
+            border: none;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+
+        .btn-lista:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-cadastro:hover {
+            background-color: #1d7c34;
+        }
+    </style>
+</head>
+<body>
+
+    <a href="listaIdeias.html" class="btn-lista">Lista de ideias</a>
+
+    <div class="texto">
+        Olá<br><br>
+        Bem vindo ao sistema de Benchmarking<br><br>
+        Cadastre uma nova ideia de melhoria para o componente de um sistema<br>
+        Ou Veja a lista de ideias cadastradas
+    </div>
+
+    <a href="cadastroIdeias.html" class="btn-cadastro">Cadastrar nova Ideia</a>
+
+</body>
+</html>
