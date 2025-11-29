@@ -1,29 +1,13 @@
 from flask import Flask, request, jsonify, render_template
 import json
 import os
+from src.db_utils import carregar_ideias, salvar_ideias, DB_PATH
 
 app = Flask(__name__, template_folder='frontend/public')
-DB_PATH = 'data/ideias.json'
-
-def carregar_ideias():
-    if not os.path.exists(DB_PATH):
-        return []
-    with open(DB_PATH, 'r') as f:
-        # Tenta carregar, senão retorna lista vazia
-        try:
-            return json.load(f)
-        except json.JSONDecodeError:
-            return []
-
-def salvar_ideias(ideias):
-    with open(DB_PATH, 'w') as f:
-        json.dump(ideias, f, indent=4)
-
 
 @app.route('/')
 def home():
     return render_template('index.html')
-
 
 @app.route('/cadastro')
 def cadastro_ideia():
