@@ -5,3 +5,6 @@ env/
 
 # Configurações 
 .vscode/
+
+# Aquivo dados locais
+data/ideias.json
