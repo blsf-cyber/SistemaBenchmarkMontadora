@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Ideias</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Roboto Mono", monospace;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 30px auto;
+            background: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 0;
+        }
+
+        .sistema {
+            margin-top: 30px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .item {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            margin: 10px 0;
+            background-color: #fafafa;
+        }
+
+        .componente {
+            font-weight: bold;
+        }
+
+        .ideia {
+            margin-top: 5px;
+            font-size: 0.95rem;
+        }
+
+        .btn-excluir {
+            margin-top: 10px;
+            padding: 8px 15px;
+            background-color: #dc3545;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+            font-family: "Roboto Mono", monospace;
+        }
+
+        .btn-excluir:hover {
+            background-color: #a71d2a;
+        }
+
+        .btn-voltar {
+            margin-top: 25px;
+            padding: 12px 20px;
+            background-color: #6c757d;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            color: white;
+            cursor: pointer;
+            font-family: "Roboto Mono", monospace;
+        }
+
+        .btn-voltar:hover {
+            background-color: #545b62;
+        }
+
+        .center {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="container">
+        <h2>Lista de Ideias Cadastradas</h2>
+
+        <div id="lista"></div>
+
+        <div class="center">
+            <button class="btn-voltar" onclick="history.back()">Voltar</button>
+        </div>
+    </div>
+
+
+    <script>
+        function carregarLista() {
+            const listaContainer = document.getElementById("lista");
+            listaContainer.innerHTML = "";
+
+            let cadastrados = JSON.parse(localStorage.getItem("Cadastrados")) || [];
+
+            if (cadastrados.length === 0) {
+                listaContainer.innerHTML = "<p style='text-align:center;'>Nenhuma ideia cadastrada.</p>";
+                return;
+            }
+
+            // Agrupar por Sistema
+            const grupos = {};
+
+            cadastrados.forEach(item => {
+                if (!grupos[item.Sistema]) {
+                    grupos[item.Sistema] = [];
+                }
+                grupos[item.Sistema].push(item);
+            });
+
+            // Renderizar grupos
+            for (const sistema in grupos) {
+                const titulo = document.createElement("div");
+                titulo.className = "sistema";
+                titulo.textContent = sistema;
+                listaContainer.appendChild(titulo);
+
+                grupos[sistema].forEach(item => {
+                    const div = document.createElement("div");
+                    div.className = "item";
+
+                    div.innerHTML = `
+                        <div class="componente">Componente: ${item.Componente}</div>
+                        <div class="ideia">${item.Ideia}</div>
+                        <button class="btn-excluir" onclick="excluir(${item.id})">Excluir</button>
+                    `;
+
+                    listaContainer.appendChild(div);
+                });
+            }
+        }
+
+        function excluir(id) {
+            let cadastrados = JSON.parse(localStorage.getItem("Cadastrados")) || [];
+
+            cadastrados = cadastrados.filter(item => item.id !== id);
+
+            localStorage.setItem("Cadastrados", JSON.stringify(cadastrados));
+
+            carregarLista();
+        }
+
+        carregarLista();
+    </script>
+
+</body>
+</html>
