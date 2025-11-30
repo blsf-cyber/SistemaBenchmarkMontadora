@@ -9,7 +9,7 @@ from app import app, salvar_ideias, carregar_ideias
 from src.db_utils import carregar_ideias, salvar_ideias, DB_PATH
 
 # Define o caminho do arquivo JSON de TESTE, diferente do DB_PATH original
-TEST_DB_PATH = 'data/test_ideias.json'
+TEST_DB_PATH = 'backend/data/test_ideias.json'
 
 @pytest.fixture
 def client():
@@ -25,8 +25,8 @@ def client():
     src.db_utils.DB_PATH = TEST_DB_PATH
     
     with app.test_client() as client:
-        if not os.path.exists('data'):
-            os.makedirs('data')
+        if not os.path.exists('backend/data'):
+            os.makedirs('backend/data')
             
         # Limpeza antes de cada teste
         if os.path.exists(TEST_DB_PATH):

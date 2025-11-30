@@ -7,7 +7,7 @@ env/
 .vscode/
 
 # Aquivo dados locais
-data/ideias.json
+backend/data/ideias.json
 
 # Arquivos e diretórios gerados pelo Python
 # Pastas de bytecode

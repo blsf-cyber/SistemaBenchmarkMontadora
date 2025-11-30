@@ -3,7 +3,8 @@ import json
 import os
 from src.db_utils import carregar_ideias, salvar_ideias, DB_PATH
 
-app = Flask(__name__, template_folder='frontend/public')
+template_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'frontend', 'public')
+app = Flask(__name__, template_folder=template_dir)
 
 @app.route('/')
 def home():
