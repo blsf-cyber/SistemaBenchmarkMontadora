@@ -1,0 +1,38 @@
+{
+  "name": "sistema-benchmark-frontend",
+  "version": "1.0.0",
+  "description": "Sistema de Benchmark de Montadora - Frontend",
+  "scripts": {
+    "test": "jest --coverage",
+    "test:coverage": "jest --coverage --coverageReporters=html --coverageReporters=text",
+    "test:watch": "jest --watch",
+    "validate": "node scripts/validate-html.js",
+    "start": "npx http-server public -p 8080"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "@testing-library/dom": "^9.3.4",
+    "html-validate": "^8.9.1",
+    "http-server": "^14.1.1"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "coverageDirectory": "coverage",
+    "collectCoverageFrom": [
+      "public/**/*.html",
+      "!public/**/node_modules/**"
+    ],
+    "testMatch": [
+      "**/tests/**/*.test.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "statements": 50,
+        "branches": 50,
+        "functions": 50,
+        "lines": 50
+      }
+    }
+  }
+}
