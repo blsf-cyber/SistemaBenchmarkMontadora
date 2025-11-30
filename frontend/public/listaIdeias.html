@@ -135,7 +135,7 @@
                 status: novoStatus
             };
 
-            await fetch("http://127.0.0.1:5000/api/ideias/alteracao", {
+            await fetch("http://localhost:5000/api/ideias/alteracao", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json"
@@ -151,7 +151,7 @@
             const listaContainer = document.getElementById("lista");
             listaContainer.innerHTML = "";
 
-            const response = await fetch("http://127.0.0.1:5000/api/ideias");
+            const response = await fetch("http://localhost:5000/api/ideias");
             const cadastrados = await response.json();
 
             if (cadastrados.length === 0) {
@@ -189,7 +189,7 @@
 
                     div.appendChild(btnExcluir);
 
-                    // Se usuário é admin → exibir botão de aprovação
+                    // Se usuário é admin então exibir botão de aprovação
                     if (isAdmin) {
                         const btnAprovar = document.createElement("button");
 
@@ -200,7 +200,7 @@
                             btnAprovar.textContent = "Cancelar aprovação";
                             btnAprovar.onclick = () => alterarStatus(item, "pendente");
                         }
-                        // Caso contrário → botão verde
+                        // Caso contrário então botão verde
                         else {
                             btnAprovar.className = "btn-aprovar";
                             btnAprovar.textContent = "Aprovar";

@@ -1,22 +1,14 @@
 from flask import Flask, request, jsonify, render_template
-import json
 import os
 from src.db_utils import carregar_ideias, salvar_ideias, DB_PATH
 
+from flask_cors import CORS, cross_origin
+
 template_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'frontend', 'public')
 app = Flask(__name__, template_folder=template_dir)
+CORS(app)
 
 @app.route('/')
-def home():
-    return render_template('index.html')
-
-@app.route('/cadastro')
-def cadastro_ideia():
-    return render_template('cadastroIdeias.html')
-
-@app.route('/ideias')
-def ideias_page():
-    return render_template('listaIdeias.html')
 
 @app.route('/api/ideias/cadastro', methods=['POST'])
 def cadastrar_ideia():
@@ -51,4 +43,4 @@ def listar_ideias():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(host="0.0.0.0", port=5000)

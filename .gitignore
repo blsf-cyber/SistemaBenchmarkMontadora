@@ -1,13 +1,13 @@
 # Ambientes Virtuais Python
-venv/
+backend/venv/
 .venv/
-env/
+backend/env/
 .Scripts/
-Scripts/
+backend/Scripts/
 .Lib/
-Lib/
+backend/Lib/
 .Include/
-Include/
+backend/Include/
 
 # Configurações 
 .vscode/

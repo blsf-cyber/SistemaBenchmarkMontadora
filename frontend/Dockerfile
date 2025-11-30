@@ -8,5 +8,4 @@ RUN chmod -R 755 /usr/share/nginx/html/
 
 EXPOSE 80
 
-# Nginx automatically serves index.html as the entry point
 CMD ["nginx", "-g", "daemon off;"]
