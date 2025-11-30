@@ -5,18 +5,6 @@ from src.db_utils import carregar_ideias, salvar_ideias, DB_PATH
 
 app = Flask(__name__, template_folder='frontend/public')
 
-@app.route('/')
-def home():
-    return render_template('index.html')
-
-@app.route('/cadastro')
-def cadastro_ideia():
-    return render_template('cadastroIdeias.html')
-
-@app.route('/ideias')
-def ideias_page():
-    return render_template('listaIdeias.html')
-
 @app.route('/api/ideias/cadastro', methods=['POST'])
 def cadastrar_ideia():
     dados = request.get_json()
