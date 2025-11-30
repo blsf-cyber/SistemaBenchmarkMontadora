@@ -3,7 +3,9 @@ version: "3.9"
 services:
   backend:
     container_name: backend
-    image: mateuscin/sistema_benchmark_montadoras_backend:V1.0.0
+    build:
+      context: backend
+      dockerfile: Dockerfile
     restart: always
     ports:
       - "5000:5000"
@@ -12,7 +14,9 @@ services:
 
   frontend:
     container_name: frontend
-    image: mateuscin/sistema_benchmark_montadoras_frontend:V1.0.0
+    build: 
+      context: frontend
+      dockerfile: Dockerfile
     restart: always
     ports:
       - "8080:80"
