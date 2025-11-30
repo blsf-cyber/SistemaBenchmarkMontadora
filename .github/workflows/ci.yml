@@ -15,7 +15,7 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v4
 
-      # FRONTEND na pasta frontend com Node.js 
+      # FRONTEND na pasta frontend com node js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -29,7 +29,7 @@ jobs:
         run: npm test
         working-directory: ./frontend
 
-      # BACKEND em Python na raiz
+      #  BACKEND com Python na raiz
       - name: Setup Python 3.10
         uses: actions/setup-python@v4
         with:
@@ -40,7 +40,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install flake8 pytest
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-        # executando agora está na raiz
+        # trabalhando agora está na raiz
 
       - name: Linting Python
         run: |
@@ -48,4 +48,4 @@ jobs:
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
       - name: Rodar testes Backend
-        run: pytest
+        run: pytest tests/ -v
