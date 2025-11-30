@@ -124,27 +124,68 @@
 
         // Admins autorizados
         const isAdmin = (
-            localStorage.getItem("userEmail") === "mpl3@cin.ufpe.br" ||
-            localStorage.getItem("userEmail") === "mpl@cin.ufpe.br"
+            localStorage.getItem("userEmail") === "admin@admin.com" ||
+            localStorage.getItem("userEmail") === "admin2@admin.com"
         );
 
         // Envia PUT ao servidor para aprovar/cancelar aprovação
         async function alterarStatus(item, novoStatus) {
-            const itemAtualizado = {
-                ...item,
-                status: novoStatus
-            };
+            try {
+                const itemAtualizado = {
+                    ...item,
+                    status: novoStatus,
+                    acao: 'atualizar'  // Apenas atualiza o status, não remove
+                };
 
-            await fetch("http://localhost:5000/api/ideias/alteracao", {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(itemAtualizado)
-            });
+                const response = await fetch("http://localhost:5000/api/ideias/alteracao", {
+                    method: "PUT",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(itemAtualizado)
+                });
 
-            alert(`Status alterado para: ${novoStatus}`);
-            carregarLista();
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.message || `Erro: ${response.statusText}`);
+                }
+
+                const resultado = await response.json();
+                alert(resultado.message);
+                carregarLista();
+            } catch (error) {
+                console.error("Erro ao alterar status:", error);
+                alert(`Erro: ${error.message}`);
+            }
+        }
+
+        // Função para remover ideia
+        async function removerIdeia(id) {
+            try {
+                const response = await fetch("http://localhost:5000/api/ideias/alteracao", {
+                    method: "PUT",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        id: id,
+                        status: 'pendente',
+                        acao: 'remover'  // Remove a ideia
+                    })
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.message || `Erro: ${response.statusText}`);
+                }
+
+                const resultado = await response.json();
+                alert(resultado.message);
+                carregarLista();
+            } catch (error) {
+                console.error("Erro ao remover:", error);
+                alert(`Erro: ${error.message}`);
+            }
         }
 
         async function carregarLista() {
@@ -193,14 +234,14 @@
                     if (isAdmin) {
                         const btnAprovar = document.createElement("button");
 
-                        // Caso o item já esteja aprovado → botão vermelho
-                        if (item.status === "aprovado") {
+                        // Caso o item já esteja aprovado → botão vermelho (Cancelar aprovação)
+                        if (item.status.toLowerCase() === "aprovado") {
                             btnAprovar.className = "btn-excluir";
                             btnAprovar.style.marginLeft = "10px";
                             btnAprovar.textContent = "Cancelar aprovação";
-                            btnAprovar.onclick = () => alterarStatus(item, "pendente");
+                            btnAprovar.onclick = () => alterarStatus(item, "Aguardando Aprovação");
                         }
-                        // Caso contrário então botão verde
+                        // Caso contrário então botão verde (Aprovar)
                         else {
                             btnAprovar.className = "btn-aprovar";
                             btnAprovar.textContent = "Aprovar";
@@ -216,10 +257,9 @@
         }
 
         function excluir(id) {
-            let cadastrados = JSON.parse(localStorage.getItem("Cadastrados")) || [];
-            cadastrados = cadastrados.filter(item => item.id !== id);
-            localStorage.setItem("Cadastrados", JSON.stringify(cadastrados));
-            carregarLista();
+            if (confirm("Tem certeza que deseja excluir esta ideia?")) {
+                removerIdeia(id);
+            }
         }
 
         carregarLista();
