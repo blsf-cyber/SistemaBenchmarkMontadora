@@ -2,8 +2,10 @@ from flask import Flask, request, jsonify, render_template
 import json
 import os
 from src.db_utils import carregar_ideias, salvar_ideias, DB_PATH
+from flask_cors import CORS
 
 app = Flask(__name__, template_folder='frontend/public')
+CORS(app)
 
 @app.route('/api/ideias/cadastro', methods=['POST'])
 def cadastrar_ideia():
