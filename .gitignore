@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Node modules
 node_modules/
 npm-debug.log*
@@ -36,3 +37,12 @@ build/
 # Temporary files
 *.tmp
 .cache/
+=======
+# Ambientes Virtuais Python
+venv/
+.venv/
+env/
+
+# Configurações 
+.vscode/
+>>>>>>> feature/backend-estrutura

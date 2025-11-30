@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: CI/CD Pipeline (Paliativo)
 
 on:
   push:
@@ -8,15 +8,14 @@ on:
 
 jobs:
   build-and-test:
-    name: Build Fullstack (Front + Back)
+    name: Build Fullstack (Sem Docker)
     runs-on: ubuntu-latest
 
     steps:
-      #Download do código
-      - name: Checkout código
+      - name: Checkout do código
         uses: actions/checkout@v4
 
-      #Parte do front no node.js
+      # FRONTEND na pasta frontend com Node.js 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -30,7 +29,7 @@ jobs:
         run: npm test
         working-directory: ./frontend
 
-      # Parte do backend no Python
+      # BACKEND em Python na raiz
       - name: Setup Python 3.10
         uses: actions/setup-python@v4
         with:
@@ -41,14 +40,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install flake8 pytest
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        # executando agora está na raiz
 
-      - name: Linting Python (Verificação de estilo)
+      - name: Linting Python
         run: |
-          # Para o build se houver erros de sintaxe graves
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-          # Apenas avisa sobre estilo, mas não quebra o build (exit-zero)
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-      - name: Rodar testes Backend (Pytest)
-        run: |
-          pytest
+      - name: Rodar testes Backend
+        run: pytest
