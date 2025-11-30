@@ -1,0 +1,17 @@
+# Ambientes Virtuais Python
+venv/
+.venv/
+env/
+
+# Configurações 
+.vscode/
+
+# Aquivo dados locais
+data/ideias.json
+
+# Arquivos e diretórios gerados pelo Python
+# Pastas de bytecode
+__pycache__/
+# Arquivos de bytecode compilado
+*.pyc
+
