@@ -34,28 +34,22 @@ Após aprovação, cada ideia receberá um responsável designado. Esse profissi
 ## Configuração e Setup
 
 ### Pré-requisitos
-Certifique-se de ter o Python 3.x e o Git instalados.
+Certifique-se de que possui o docker instalado e acesso a internet.
 
-1. **Preparação do Ambiente Virtual**
-Recomendamos o uso de um ambiente virtual para isolar as dependências:
+1. **Preparação do container**
 ```bash
-# Crie o ambiente virtual (venv)
-python3 -m venv venv
-
-# Ative o ambiente virtual em macOS/Linux
-source venv/bin/activate  # macOS/Linux
-
-# Ative o ambiente virtual em Windows
-venv\Scripts\activate
+docker compose up --build -d
 ```
 
-2. **Instalação de Dependências**
-Todas as dependências estão listadas no arquivo requirements.txt.
+2. **Verificação do estado do container**
+
 ```bash
-pip install -r requirements.txt
+docker ps
 ```
-3. **Execução da Aplicação**
-Após a instalação, a aplicação pode ser iniciada usando o comando:
+O container nomeado "mateuscin/sistema_benchmark_montadoras_frontend" e "mateuscin/sistema_benchmark_montadoras_backend" deverão estar no estatus "up * minutes"
+
 ```bash
-python app.py
+CONTAINER ID   IMAGE                                                    COMMAND                  CREATED         STATUS         PORTS                                         NAMES
+96f05908490d   mateuscin/sistema_benchmark_montadoras_frontend:V1.0.0   "/docker-entrypoint.…"   9 minutes ago   Up 9 minutes   0.0.0.0:8080->80/tcp, [::]:8080->80/tcp       frontend
+8752d387503d   mateuscin/sistema_benchmark_montadoras_backend:V1.0.0    "python app.py"          9 minutes ago   Up 9 minutes   0.0.0.0:5000->5000/tcp, [::]:5000->5000/tcp   backend
 ```

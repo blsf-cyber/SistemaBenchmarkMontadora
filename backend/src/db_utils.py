@@ -2,7 +2,7 @@ import json
 import os
 
 # Caminho global que será usado pelo app.py e sobrescrito pelos testes
-DB_PATH = 'backend/data/ideias.json'
+DB_PATH = 'data/ideias.json'
 
 def carregar_ideias():
     if not os.path.exists(DB_PATH):

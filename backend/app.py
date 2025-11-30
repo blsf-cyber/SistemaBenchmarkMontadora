@@ -1,22 +1,14 @@
 from flask import Flask, request, jsonify, render_template
-import json
 import os
 from src.db_utils import carregar_ideias, salvar_ideias, DB_PATH
 
+from flask_cors import CORS, cross_origin
+
 template_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'frontend', 'public')
 app = Flask(__name__, template_folder=template_dir)
+CORS(app)
 
 @app.route('/')
-def home():
-    return render_template('index.html')
-
-@app.route('/cadastro')
-def cadastro_ideia():
-    return render_template('cadastroIdeias.html')
-
-@app.route('/ideias')
-def ideias_page():
-    return render_template('listaIdeias.html')
 
 @app.route('/api/ideias/cadastro', methods=['POST'])
 def cadastrar_ideia():
@@ -50,5 +42,59 @@ def listar_ideias():
     return jsonify(carregar_ideias()), 200
 
 
+@app.route('/api/ideias/status', methods=['PUT', 'OPTIONS'])
+@cross_origin()
+def alterarStatusIdeia():
+    """Altera apenas o status de uma ideia (Aprovar/Cancelar aprovação)"""
+    dados = request.get_json()
+
+    # Validação
+    if not dados or 'id' not in dados or 'status' not in dados:
+        return jsonify({"message": "ID e status são obrigatórios."}), 400
+
+    ideias = carregar_ideias()
+    ideia_id = dados['id']
+    novo_status = dados['status']
+
+    # Busca a ideia pelo ID
+    ideia_encontrada = None
+    for ideia in ideias:
+        if ideia['id'] == ideia_id:
+            ideia_encontrada = ideia
+            break
+
+    if not ideia_encontrada:
+        return jsonify({"message": "Ideia não encontrada."}), 404
+
+    # Atualiza o status
+    ideia_encontrada['status'] = novo_status
+    salvar_ideias(ideias)
+
+    return jsonify({"message": f"Status alterado para: {novo_status}", "ideia": ideia_encontrada}), 200
+
+
+@app.route('/api/ideias/<int:ideia_id>', methods=['DELETE', 'OPTIONS'])
+@cross_origin()
+def removerIdeia(ideia_id):
+    """Remove uma ideia completamente"""
+    ideias = carregar_ideias()
+
+    # Busca a ideia pelo ID
+    ideia_encontrada = None
+    for ideia in ideias:
+        if ideia['id'] == ideia_id:
+            ideia_encontrada = ideia
+            break
+
+    if not ideia_encontrada:
+        return jsonify({"message": "Ideia não encontrada."}), 404
+
+    # Remove a ideia
+    ideias = [ideia for ideia in ideias if ideia['id'] != ideia_id]
+    salvar_ideias(ideias)
+
+    return jsonify({"message": "Ideia removida com sucesso!"}), 200
+
+
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(host="0.0.0.0", port=5000)

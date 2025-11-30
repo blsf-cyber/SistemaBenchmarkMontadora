@@ -141,10 +141,13 @@
             };
 
             // Envia para o backend Flask
-            fetch('/api/ideias/cadastro', {
+            fetch('http://localhost:5000/api/ideias/cadastro', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
+                    'Access-Control-Allow-Headers': 'Content-Type, Authorization'
                 },
                 body: JSON.stringify(novaIdeia)
             })
