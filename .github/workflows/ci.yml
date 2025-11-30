@@ -2,28 +2,53 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ "main", "develop" ]
   pull_request:
-    branches: [ main, develop ]
+    branches: [ "main", "develop" ]
 
 jobs:
   build-and-test:
-    name: Build e Testes
+    name: Build Fullstack (Front + Back)
     runs-on: ubuntu-latest
-    
+
     steps:
+      #Download do código
       - name: Checkout código
         uses: actions/checkout@v4
-      
+
+      #Parte do front no node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-      
-      - name: Instalar dependências
+
+      - name: Instalar dependências Frontend
         run: npm ci
         working-directory: ./frontend
-      
-      - name: Rodar testes
+
+      - name: Rodar testes Frontend
         run: npm test
         working-directory: ./frontend
+
+      # Parte do backend no Python
+      - name: Setup Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Instalar dependências Backend
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 pytest
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Linting Python (Verificação de estilo)
+        run: |
+          # Para o build se houver erros de sintaxe graves
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          # Apenas avisa sobre estilo, mas não quebra o build (exit-zero)
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+      - name: Rodar testes Backend (Pytest)
+        run: |
+          pytest
