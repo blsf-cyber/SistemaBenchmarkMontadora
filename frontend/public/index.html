@@ -82,5 +82,27 @@
 
     <a href="cadastroIdeias.html" class="btn-cadastro">Cadastrar nova Ideia</a>
 
+    <script>
+        window.onload = function () {
+            // Verifica se já existe um email salvo
+            let savedEmail = localStorage.getItem("userEmail");
+
+            // Se não existir, pergunta ao usuário
+            if (!savedEmail) {
+                alert("Precisamos do seu e-mail para continuar!");
+
+                let email = prompt("Digite seu e-mail:");
+
+                // Valida entrada simples
+                if (email && email.includes("@")) {
+                    localStorage.setItem("userEmail", email);
+                    alert("E-mail salvo com sucesso!");
+                } else {
+                    alert("E-mail inválido. A página irá pedir novamente na próxima visita.");
+                }
+            }
+        };
+    </script>
+
 </body>
 </html>

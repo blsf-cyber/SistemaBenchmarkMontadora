@@ -1,3 +1,26 @@
+# Ambientes Virtuais Python
+backend/venv/
+.venv/
+backend/env/
+.Scripts/
+backend/Scripts/
+.Lib/
+backend/Lib/
+.Include/
+backend/Include/
+
+# Configurações 
+.vscode/
+
+# Aquivo dados locais
+backend/data/ideias.json
+
+# Arquivos e diretórios gerados pelo Python
+# Pastas de bytecode
+__pycache__/
+# Arquivos de bytecode compilado
+*.pyc
+
 # Node modules
 node_modules/
 npm-debug.log*

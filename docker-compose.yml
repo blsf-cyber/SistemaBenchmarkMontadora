@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  backend:
+    container_name: backend
+    image: mateuscin/sistema_benchmark_montadoras_backend:latest
+    restart: always
+    ports:
+      - "5000:5000"
+    networks:
+      - app-network
+
+  frontend:
+    container_name: frontend
+    image: mateuscin/sistema_benchmark_montadoras_frontend:latest
+    restart: always
+    ports:
+      - "8080:80"
+    networks:
+      - app-network
+
+# Name of the composed project
+name: sistema_benchmark_montadoras
+
+networks:
+  app-network:
+    driver: bridge
