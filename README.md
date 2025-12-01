@@ -13,6 +13,15 @@ Para este projeto, com foco em práticas de SCM e rastreabilidade, utilizaremos 
 * **Ambiente:** Docker para ambiente replicável.
 
 
+## Tecnologias Utilizadas
+Para este projeto, com foco em práticas de SCM e rastreabilidade, utilizaremos as seguintes tecnologias:
+* **Linguagem:** Python 3.x
+* **Framework Web:** Flask
+* **Banco de Dados:** 
+* **Versionamento:** Git e GitHub.
+* **Ambiente:** Docker para ambiente replicável.
+
+
 ## Funcionalidades
 
 ### Cadastro de Ideias
