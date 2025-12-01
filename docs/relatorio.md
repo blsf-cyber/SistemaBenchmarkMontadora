@@ -32,7 +32,8 @@ Esta seção resume os desafios encontrados e como a equipe aplicou as práticas
 
 ### Bruna Fortes
 **Pápeis principais:** ```Gerente de Configuração``` e ```Resp. por Build/CI```
-**Reflexões:** 
+**Reflexões:Bruna Fortes
+Minha atuação focou na estruturação e fiscalização do fluxo. Obtive um entendimento prático sobre a utilização de Tags de Release do GitHub, a correta estruturação das branches (GitFlow) e a aplicação dos workflows do GitHub Actions para a validação contínua de testes. Essa experiência reforçou a importância da automação e rastreabilidade no SCM.
 
 ### Diego Silva
 **Pápeis principais** ```Desenvolvedor``` e ```Testador```

@@ -3,12 +3,12 @@
 ## Descrição Geral
 
 O sistema tem como objetivo gerenciar e organizar ideias de redução de custos e melhorias relacionadas a sistemas automotivos de outras montadoras. A proposta é centralizar o processo de submissão, avaliação e acompanhamento de iniciativas identificadas através de benchmarking, permitindo que as equipes mantenham um fluxo estruturado de análise e possível implementação dessas oportunidades.
-
 ## Tecnologias Utilizadas
+
 Para este projeto, com foco em práticas de SCM e rastreabilidade, utilizaremos as seguintes tecnologias:
-* **Linguagem:** Python 3.x
+* **Linguagem:** Python 3.12
 * **Framework Web:** Flask
-* **Banco de Dados:** 
+* **Banco de Dados:** JSON para simulação 
 * **Versionamento:** Git e GitHub.
 * **Ambiente:** Docker para ambiente replicável.
 
