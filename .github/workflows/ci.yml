@@ -1,29 +1,51 @@
-name: CI/CD Pipeline
+name: CI/CD Pipeline (Paliativo)
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ "main", "develop" ]
   pull_request:
-    branches: [ main, develop ]
+    branches: [ "main", "develop" ]
 
 jobs:
   build-and-test:
-    name: Build e Testes
+    name: Build Fullstack (Sem Docker)
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: Checkout código
+      - name: Checkout do código
         uses: actions/checkout@v4
-      
+
+      # FRONTEND na pasta frontend com node js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-      
-      - name: Instalar dependências
+
+      - name: Instalar dependências Frontend
         run: npm ci
         working-directory: ./frontend
-      
-      - name: Rodar testes
+
+      - name: Rodar testes Frontend
         run: npm test
         working-directory: ./frontend
+
+      #  BACKEND com Python na raiz
+      - name: Setup Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Instalar dependências Backend
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 pytest
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        # trabalhando agora está na raiz
+
+      - name: Linting Python
+        run: |
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+      - name: Rodar testes Backend
+        run: pytest tests/ -v
